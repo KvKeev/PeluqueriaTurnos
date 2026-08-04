@@ -187,8 +187,8 @@ void menuTurnos(GestorTurnos& gt, GestorClientes& gc, GestorPeluqueros& gp) {
         cout << "=== GESTION DE TURNOS ===" << endl;
         cout << "1. Asignar turno" << endl;
         cout << "2. Cancelar turno" << endl;
-        cout << "3. Atender siguiente (cola / fila)" << endl;
-        cout << "4. Ver historial de atendidos (pila)" << endl;
+        cout << "3. Atender siguiente" << endl;
+        cout << "4. Ver historial de atendidos" << endl;
         cout << "5. Ver todos los turnos" << endl;
         cout << "0. Volver" << endl;
         op = leerEnteroEnRango("Opcion: ", 0, 5);
