@@ -139,16 +139,16 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Tp Ing\Cliente.h" />
-    <ClInclude Include="..\..\..\Tp Ing\GestorClientes.h" />
-    <ClInclude Include="..\..\..\Tp Ing\GestorPeluqueros.h" />
-    <ClInclude Include="..\..\..\Tp Ing\GestorTurnos.h" />
-    <ClInclude Include="..\..\..\Tp Ing\Peluquero.h" />
-    <ClInclude Include="..\..\..\Tp Ing\Turno.h" />
-    <ClInclude Include="..\..\..\Tp Ing\Utilidades.h" />
+    <ClInclude Include="Cliente.h" />
+    <ClInclude Include="GestorClientes.h" />
+    <ClInclude Include="GestorPeluqueros.h" />
+    <ClInclude Include="GestorTurnos.h" />
+    <ClInclude Include="Peluquero.h" />
+    <ClInclude Include="Turno.h" />
+    <ClInclude Include="Utilidades.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Tp Ing\main.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
