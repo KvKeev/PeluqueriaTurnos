@@ -6,42 +6,61 @@
 #include "Utilidades.h"
 using namespace std;
 
-// Busca clientes por nombre/apellido y siempre muestra una lista numerada para elegir,
-// aunque haya una sola coincidencia. Devuelve -1 si no encuentra nada.
+// Busca clientes por nombre/apellido y muestra una lista numerada para elegir.
+// Se puede cancelar dejando la busqueda vacia, o eligiendo la opcion 0 de la lista.
+// Devuelve -1 si no encuentra nada o si el usuario cancela.
 int seleccionarClientePorNombre(GestorClientes& g) {
-    string texto = leerTextoBusqueda("Nombre o apellido a buscar: ");
-    vector<Cliente> coincidencias = g.buscarCoincidencias(texto);
+    string texto = leerTexto("Nombre o apellido a buscar (Enter para cancelar): ");
+    if (texto.empty()) {
+        cout << "Operacion cancelada." << endl;
+        return -1;
+    }
 
+    vector<Cliente> coincidencias = g.buscarCoincidencias(texto);
     if (coincidencias.empty()) {
         cout << "No se encontraron clientes con ese nombre." << endl;
         return -1;
     }
 
-    cout << "Se encontraros los siguientes clientes:" << endl;
+    cout << "Se encontraron los siguientes clientes:" << endl;
     for (int i = 0; i < coincidencias.size(); i++) {
         cout << (i + 1) << ") " << coincidencias[i].getNombre() << " " << coincidencias[i].getApellido()
             << " | Tel: " << coincidencias[i].getTelefono() << endl;
     }
-    int opcion = leerEnteroEnRango("Elegi un numero: ", 1, (int)coincidencias.size());
+    cout << "0) Cancelar" << endl;
+    int opcion = leerEnteroEnRango("Elegi un numero: ", 0, (int)coincidencias.size());
+    if (opcion == 0) {
+        cout << "Operacion cancelada." << endl;
+        return -1;
+    }
     return coincidencias[opcion - 1].getId();
 }
 
 // Lo mismo pero para peluqueros
 int seleccionarPeluqueroPorNombre(GestorPeluqueros& g) {
-    string texto = leerTextoBusqueda("Nombre o apellido a buscar: ");
-    vector<Peluquero> coincidencias = g.buscarCoincidencias(texto);
+    string texto = leerTexto("Nombre o apellido a buscar (Enter para cancelar): ");
+    if (texto.empty()) {
+        cout << "Operacion cancelada." << endl;
+        return -1;
+    }
 
+    vector<Peluquero> coincidencias = g.buscarCoincidencias(texto);
     if (coincidencias.empty()) {
         cout << "No se encontraron peluqueros con ese nombre." << endl;
         return -1;
     }
 
-    cout << "Se encontraros los siguientes peluqueros:" << endl;
+    cout << "Se encontraron los siguientes peluqueros:" << endl;
     for (int i = 0; i < coincidencias.size(); i++) {
         cout << (i + 1) << ") " << coincidencias[i].getNombre() << " " << coincidencias[i].getApellido()
             << " | Tel: " << coincidencias[i].getTelefono() << endl;
     }
-    int opcion = leerEnteroEnRango("Elegi un numero: ", 1, (int)coincidencias.size());
+    cout << "0) Cancelar" << endl;
+    int opcion = leerEnteroEnRango("Elegi un numero: ", 0, (int)coincidencias.size());
+    if (opcion == 0) {
+        cout << "Operacion cancelada." << endl;
+        return -1;
+    }
     return coincidencias[opcion - 1].getId();
 }
 
@@ -88,10 +107,15 @@ void menuPeluqueros(GestorPeluqueros& g) {
             g.listar();
         }
         else if (op == 5) {
-            string texto = leerTextoBusqueda("Nombre o apellido a buscar: ");
-            vector<Peluquero> coincidencias = g.buscarCoincidencias(texto);
-            if (coincidencias.empty()) cout << "No se encontraron peluqueros con ese nombre." << endl;
-            else for (int i = 0; i < coincidencias.size(); i++) cout << coincidencias[i].toString() << endl;
+            string texto = leerTexto("Nombre o apellido a buscar: ");
+            if (texto.empty()) {
+                cout << "Tenes que escribir algo para buscar." << endl;
+            }
+            else {
+                vector<Peluquero> coincidencias = g.buscarCoincidencias(texto);
+                if (coincidencias.empty()) cout << "No se encontraron peluqueros con ese nombre." << endl;
+                else for (int i = 0; i < coincidencias.size(); i++) cout << coincidencias[i].toString() << endl;
+            }
         }
 
         if (op != 0) pausar();
@@ -141,10 +165,15 @@ void menuClientes(GestorClientes& g) {
             g.listar();
         }
         else if (op == 5) {
-            string texto = leerTextoBusqueda("Nombre o apellido a buscar: ");
-            vector<Cliente> coincidencias = g.buscarCoincidencias(texto);
-            if (coincidencias.empty()) cout << "No se encontraron clientes con ese nombre." << endl;
-            else for (int i = 0; i < coincidencias.size(); i++) cout << coincidencias[i].toString() << endl;
+            string texto = leerTexto("Nombre o apellido a buscar: ");
+            if (texto.empty()) {
+                cout << "Tenes que escribir algo para buscar." << endl;
+            }
+            else {
+                vector<Cliente> coincidencias = g.buscarCoincidencias(texto);
+                if (coincidencias.empty()) cout << "No se encontraron clientes con ese nombre." << endl;
+                else for (int i = 0; i < coincidencias.size(); i++) cout << coincidencias[i].toString() << endl;
+            }
         }
 
         if (op != 0) pausar();
@@ -171,9 +200,8 @@ void menuTurnos(GestorTurnos& gt, GestorClientes& gc, GestorPeluqueros& gp) {
                 cout << "--- Peluquero ---" << endl;
                 int idPeluquero = seleccionarPeluqueroPorNombre(gp);
                 if (idPeluquero != -1) {
-                    string fecha = leerFecha("Fecha del turno");
                     string servicio = leerTexto("Servicio: ");
-                    gt.asignar(idCliente, idPeluquero, fecha, servicio);
+                    gt.asignar(idCliente, idPeluquero, servicio);
                     cout << "Turno asignado con exito." << endl;
                 }
             }

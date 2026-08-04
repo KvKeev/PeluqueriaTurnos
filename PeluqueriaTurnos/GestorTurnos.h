@@ -63,8 +63,8 @@ public:
         return maxId + 1;
     }
 
-    void asignar(int idCliente, int idPeluquero, string fecha, string servicio) {
-        Turno t(nuevoId(), idCliente, idPeluquero, fecha, servicio);
+    void asignar(int idCliente, int idPeluquero, string servicio) {
+        Turno t(nuevoId(), idCliente, idPeluquero, servicio);
         lista.push_back(t);
         pendientes.push(t); // entra al final de la fila
         guardarEnArchivo();
@@ -106,7 +106,6 @@ public:
             return;
         }
         stack<Turno> copia = historial; // se copia para no vaciar la pila real
-        cout << "(el mas reciente primero)" << endl;
         while (!copia.empty()) {
             cout << copia.top().toString() << endl;
             copia.pop();
