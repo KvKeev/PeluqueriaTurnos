@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="PeluqueriaTurnos/PeluqueriaTurnos.vcxproj" />
+  <Project Path="PeluqueriaTurnos/PeluqueriaTurnos.vcxproj" Id="51a2ee92-c187-40bc-9432-e6fae37afc14" />
 </Solution>
