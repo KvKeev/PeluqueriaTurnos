@@ -62,6 +62,15 @@ public:
         }
         return resultado;
     }
+    // Devuelve todos los peluqueros activos, sin filtrar por nombre.
+    vector<Peluquero> getActivos() {
+        vector<Peluquero> resultado;
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista[i].getActivo()) resultado.push_back(lista[i]);
+        }
+        return resultado;
+    }
+
 
     void alta(Peluquero p) {
         lista.push_back(p);

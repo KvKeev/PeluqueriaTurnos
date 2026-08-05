@@ -6,23 +6,42 @@
 #include "Utilidades.h"
 using namespace std;
 
-// Busca clientes por nombre/apellido y muestra una lista numerada para elegir.
-// Se puede cancelar dejando la busqueda vacia, o eligiendo la opcion 0 de la lista.
-// Devuelve -1 si no encuentra nada o si el usuario cancela.
+
+// Muestra un menu para buscar clientes por nombre o listar todos, devuelve el id del cliente seleccionado o -1 si cancela
 int seleccionarClientePorNombre(GestorClientes& g) {
-    string texto = leerTexto("Nombre o apellido a buscar (Enter para cancelar): ");
-    if (texto.empty()) {
+    cout << "1. Buscar por nombre" << endl;
+    cout << "2. Listar todos" << endl;
+    cout << "0. Cancelar" << endl;
+    int modo = leerEnteroEnRango("Opcion: ", 0, 2);
+
+    if (modo == 0) {
         cout << "Operacion cancelada." << endl;
         return -1;
     }
 
-    vector<Cliente> coincidencias = g.buscarCoincidencias(texto);
-    if (coincidencias.empty()) {
-        cout << "No se encontraron clientes con ese nombre." << endl;
-        return -1;
+    vector<Cliente> coincidencias;
+
+    if (modo == 1) {
+        string texto = leerTexto("Ingrese nombre o apellido a buscar o 0 (cero) para cancelar: ");
+        if (texto == "0") {
+            cout << "Operacion cancelada." << endl;
+            return -1;
+        }
+        coincidencias = g.buscarCoincidencias(texto);
+        if (coincidencias.empty()) {
+            cout << "No se encontraron clientes con ese nombre." << endl;
+            return -1;
+        }
+    }
+    else {
+        coincidencias = g.getActivos();
+        if (coincidencias.empty()) {
+            cout << "No hay clientes cargados." << endl;
+            return -1;
+        }
     }
 
-    cout << "Se encontraron los siguientes clientes:" << endl;
+    cout << "Elegi un cliente:" << endl;
     for (int i = 0; i < coincidencias.size(); i++) {
         cout << (i + 1) << ") " << coincidencias[i].getNombre() << " " << coincidencias[i].getApellido()
             << " | Tel: " << coincidencias[i].getTelefono() << endl;
@@ -36,21 +55,41 @@ int seleccionarClientePorNombre(GestorClientes& g) {
     return coincidencias[opcion - 1].getId();
 }
 
-// Lo mismo pero para peluqueros
+// Misma logica que seleccionarClientePorNombre, para peluqueros.
 int seleccionarPeluqueroPorNombre(GestorPeluqueros& g) {
-    string texto = leerTexto("Nombre o apellido a buscar (Enter para cancelar): ");
-    if (texto.empty()) {
+    cout << "1. Buscar por nombre" << endl;
+    cout << "2. Listar todos" << endl;
+    cout << "0. Cancelar" << endl;
+    int modo = leerEnteroEnRango("Opcion: ", 0, 2);
+
+    if (modo == 0) {
         cout << "Operacion cancelada." << endl;
         return -1;
     }
 
-    vector<Peluquero> coincidencias = g.buscarCoincidencias(texto);
-    if (coincidencias.empty()) {
-        cout << "No se encontraron peluqueros con ese nombre." << endl;
-        return -1;
+    vector<Peluquero> coincidencias;
+
+    if (modo == 1) {
+        string texto = leerTexto("Ingrese nombre o apellido a buscar o 0 (cero) para cancelar: ");
+        if (texto == "0") {
+            cout << "Operacion cancelada." << endl;
+            return -1;
+        }
+        coincidencias = g.buscarCoincidencias(texto);
+        if (coincidencias.empty()) {
+            cout << "No se encontraron peluqueros con ese nombre." << endl;
+            return -1;
+        }
+    }
+    else {
+        coincidencias = g.getActivos();
+        if (coincidencias.empty()) {
+            cout << "No hay peluqueros cargados." << endl;
+            return -1;
+        }
     }
 
-    cout << "Se encontraron los siguientes peluqueros:" << endl;
+    cout << "Elegi un peluquero:" << endl;
     for (int i = 0; i < coincidencias.size(); i++) {
         cout << (i + 1) << ") " << coincidencias[i].getNombre() << " " << coincidencias[i].getApellido()
             << " | Tel: " << coincidencias[i].getTelefono() << endl;
@@ -107,7 +146,7 @@ void menuPeluqueros(GestorPeluqueros& g) {
             g.listar();
         }
         else if (op == 5) {
-            string texto = leerTexto("Nombre o apellido a buscar: ");
+            string texto = leerTexto("Ingrese nombre o apellido a buscar: ");
             if (texto.empty()) {
                 cout << "Tenes que escribir algo para buscar." << endl;
             }
@@ -165,7 +204,7 @@ void menuClientes(GestorClientes& g) {
             g.listar();
         }
         else if (op == 5) {
-            string texto = leerTexto("Nombre o apellido a buscar: ");
+            string texto = leerTexto("Ingrese nombre o apellido a buscar: ");
             if (texto.empty()) {
                 cout << "Tenes que escribir algo para buscar." << endl;
             }

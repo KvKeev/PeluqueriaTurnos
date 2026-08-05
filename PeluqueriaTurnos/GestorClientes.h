@@ -63,6 +63,15 @@ public:
         return resultado;
     }
 
+    // Devuelve todos los clientes activos, sin filtrar por nombre.
+    vector<Cliente> getActivos() {
+        vector<Cliente> resultado;
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista[i].getActivo()) resultado.push_back(lista[i]);
+        }
+        return resultado;
+    }
+
     void alta(Cliente c) {
         lista.push_back(c);
         guardarEnArchivo();
@@ -91,6 +100,8 @@ public:
         }
         return false;
     }
+
+
 	// Muestra todos los clientes activos en la consola
     void listar() {
         bool hayAlguno = false;
@@ -102,4 +113,5 @@ public:
         }
         if (!hayAlguno) cout << "No hay clientes cargados." << endl;
     }
+
 };
