@@ -20,6 +20,8 @@ public:
         estado = "PENDIENTE";
     }
 
+    //los turnos arrancan con estado pendiente
+
     Turno(int id, int idCliente, int idPeluquero, string servicio) {
         this->id = id;
         this->idCliente = idCliente;

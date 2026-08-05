@@ -8,6 +8,7 @@ using namespace std;
 
 class GestorClientes {
 private:
+	//Vector de clientes mantiene la lista en memoria mientras corre el programa
     vector<Cliente> lista;
     string nombreArchivo;
 
@@ -39,6 +40,7 @@ public:
         }
     }
 
+	//Busca el id mas alto y devuelve el siguiente para asignar a un nuevo cliente
     int nuevoId() {
         int maxId = 0;
         for (int i = 0; i < lista.size(); i++) {
@@ -47,7 +49,7 @@ public:
         return maxId + 1;
     }
 
-    // Devuelve todos los clientes activos cuyo nombre o apellido contenga el texto buscado
+	//Busca coincidencias en nombre y apellido, devuelve un vector con los clientes encontrados
     vector<Cliente> buscarCoincidencias(string textoBuscado) {
         string buscado = aMinusculas(textoBuscado);
         vector<Cliente> resultado;
@@ -89,7 +91,7 @@ public:
         }
         return false;
     }
-
+	// Muestra todos los clientes activos en la consola
     void listar() {
         bool hayAlguno = false;
         for (int i = 0; i < lista.size(); i++) {

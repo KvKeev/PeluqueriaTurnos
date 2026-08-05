@@ -9,9 +9,9 @@ using namespace std;
 
 class GestorTurnos {
 private:
-    vector<Turno> lista;       // todos los turnos (fuente de verdad para guardar y listar)
-    queue<Turno> pendientes;   // cola: representa la fila real de espera (FIFO)
-    stack<Turno> historial;    // pila: turnos ya atendidos, para ver el historial (LIFO)
+	vector<Turno> lista;       // Lista completa de turnos (pendientes, atendidos y cancelados)
+	queue<Turno> pendientes;   // turnos pendientes de atender
+	stack<Turno> historial;    // Historial de turnos atendidos
     string nombreArchivo;
 
     void guardarEnArchivo() {
@@ -27,7 +27,7 @@ private:
         }
     }
 
-    // Vuelve a armar la cola de pendientes a partir de la lista completa
+	// Reconstruye la cola de pendientes a partir de la lista completa
     void rearmarCola() {
         while (!pendientes.empty()) pendientes.pop();
         for (int i = 0; i < lista.size(); i++) {
@@ -36,6 +36,7 @@ private:
     }
 
 public:
+	// Constructor que carga los turnos desde el archivo y reconstruye la cola de pendientes y la pila de historial
     GestorTurnos() {
         nombreArchivo = "turnos.txt";
         ifstream archivo(nombreArchivo);
@@ -49,7 +50,7 @@ public:
             archivo.close();
         }
         rearmarCola();
-        // Reconstruye el historial con los turnos ya atendidos (orden aproximado al reabrir)
+		// Reconstruye la pila de historial a partir de la lista completa
         for (int i = 0; i < lista.size(); i++) {
             if (lista[i].getEstado() == "ATENDIDO") historial.push(lista[i]);
         }
@@ -62,7 +63,7 @@ public:
         }
         return maxId + 1;
     }
-
+	// Crea un nuevo turno, lo agrega a la lista completa y a la cola de pendientes
     void asignar(int idCliente, int idPeluquero, string servicio) {
         Turno t(nuevoId(), idCliente, idPeluquero, servicio);
         lista.push_back(t);
@@ -70,7 +71,7 @@ public:
         guardarEnArchivo();
     }
 
-    // Saca el primero de la cola (el que llego primero) y lo marca ATENDIDO
+    // Saca el primero de la cola y lo marca ATENDIDO
     bool atenderSiguiente() {
         if (pendientes.empty()) return false;
 
@@ -100,6 +101,7 @@ public:
         return false;
     }
 
+	// Muestra los turnos atendidos en orden inverso al que fueron atendidos. Realiza una copia de la pila para no vaciar la original.
     void listarHistorial() {
         if (historial.empty()) {
             cout << "Todavia no se atendio ningun turno." << endl;

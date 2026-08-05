@@ -47,7 +47,7 @@ public:
         return oss.str();
     }
 
-    // Formato: id;nombre;apellido;telefono;activo
+    //Serializacion y Formato: id;nombre;apellido;telefono;activo
     string toArchivo() {
         ostringstream oss;
         oss << id << ";" << nombre << ";" << apellido << ";" << telefono << ";" << activo;

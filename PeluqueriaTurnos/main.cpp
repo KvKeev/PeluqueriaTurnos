@@ -82,7 +82,7 @@ void menuPeluqueros(GestorPeluqueros& g) {
             cout << "ID asignado: " << id << endl;
             string nombre = leerTexto("Nombre: ");
             string apellido = leerTexto("Apellido: ");
-            string telefono = leerTexto("Telefono: ");
+            string telefono = leerTelefono("Telefono: ");
             g.alta(Peluquero(id, nombre, apellido, telefono));
             cout << "Peluquero cargado con exito." << endl;
         }
@@ -98,8 +98,8 @@ void menuPeluqueros(GestorPeluqueros& g) {
             if (id != -1) {
                 string nombre = leerTexto("Nuevo nombre: ");
                 string apellido = leerTexto("Nuevo apellido: ");
-                string telefono = leerTexto("Nuevo telefono: ");
-                if (g.modificar(id, nombre, apellido, telefono)) cout << "Modificado con exito." << endl;
+                string telefono = leerTelefono("Nuevo telefono: ");
+                if (g.modificar(id, nombre, apellido, telefono)) cout << "Peluquero modificado con exito." << endl;
                 else cout << "No se pudo modificar." << endl;
             }
         }
@@ -140,7 +140,7 @@ void menuClientes(GestorClientes& g) {
             cout << "ID asignado: " << id << endl;
             string nombre = leerTexto("Nombre: ");
             string apellido = leerTexto("Apellido: ");
-            string telefono = leerTexto("Telefono: ");
+            string telefono = leerTelefono("Telefono: ");
             g.alta(Cliente(id, nombre, apellido, telefono));
             cout << "Cliente cargado con exito." << endl;
         }
@@ -156,8 +156,8 @@ void menuClientes(GestorClientes& g) {
             if (id != -1) {
                 string nombre = leerTexto("Nuevo nombre: ");
                 string apellido = leerTexto("Nuevo apellido: ");
-                string telefono = leerTexto("Nuevo telefono: ");
-                if (g.modificar(id, nombre, apellido, telefono)) cout << "Modificado con exito." << endl;
+                string telefono = leerTelefono("Nuevo telefono: ");
+                if (g.modificar(id, nombre, apellido, telefono)) cout << "Cliente modificado con exito." << endl;
                 else cout << "No se pudo modificar." << endl;
             }
         }
@@ -228,6 +228,8 @@ void menuTurnos(GestorTurnos& gt, GestorClientes& gc, GestorPeluqueros& gp) {
 }
 
 int main() {
+
+	// Inicializa los gestores de peluqueros, clientes y turnos
     GestorPeluqueros gp;
     GestorClientes gc;
     GestorTurnos gt;

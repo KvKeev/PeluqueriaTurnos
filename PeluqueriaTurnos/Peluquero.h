@@ -12,6 +12,7 @@ private:
     bool activo;
 
 public:
+	//Constructor vacio para reconstruir desde archivo
     Peluquero() {
         id = 0;
         nombre = "";
@@ -47,13 +48,14 @@ public:
         return oss.str();
     }
 
-    // Formato: id;nombre;apellido;telefono;activo
+    // Serializacion y Formato: id;nombre;apellido;telefono;activo
     string toArchivo() {
         ostringstream oss;
         oss << id << ";" << nombre << ";" << apellido << ";" << telefono << ";" << activo;
         return oss.str();
     }
 
+	//Lee una linea del archivo y reconstruye un objeto Peluquero
     static Peluquero desdeArchivo(string linea) {
         Peluquero p;
         stringstream ss(linea);

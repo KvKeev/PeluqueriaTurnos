@@ -5,6 +5,8 @@
 #include <cstdlib>
 using namespace std;
 
+
+// Limpia la pantalla de la consola segun si esta en windows o linux
 inline void limpiarPantalla() {
 #ifdef _WIN32
     system("cls");
@@ -13,6 +15,7 @@ inline void limpiarPantalla() {
 #endif
 }
 
+//Validacion de que sea un numero entero
 inline int leerEntero(string mensaje) {
     int valor;
     cout << mensaje;
@@ -31,6 +34,25 @@ inline int leerEnteroEnRango(string mensaje, int minimo, int maximo) {
         cout << "El valor debe estar entre " << minimo << " y " << maximo << "." << endl;
         valor = leerEntero(mensaje);
     }
+    return valor;
+}
+
+inline string leerTelefono(string mensaje) {
+    string valor;
+    bool esValido;
+    do {
+        cout << mensaje;
+        getline(cin, valor);
+
+        esValido = !valor.empty();
+        for (int i = 0; i < valor.size() && esValido; i++) {
+            if (!isdigit(valor[i])) esValido = false;
+        }
+
+        if (!esValido) {
+            cout << "Telefono invalido. Ingrese solo numeros, sin espacios ni guiones." << endl;
+        }
+    } while (!esValido);
     return valor;
 }
 

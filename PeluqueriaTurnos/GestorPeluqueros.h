@@ -8,9 +8,11 @@ using namespace std;
 
 class GestorPeluqueros {
 private:
+    //Vector de peluqueros mantiene la lista en memoria mientras corre el programa
     vector<Peluquero> lista;
     string nombreArchivo;
 
+	//Reescribe el archivo de peluqueros con la lista completa en memoria
     void guardarEnArchivo() {
         ofstream archivo(nombreArchivo);
         if (archivo.is_open()) {
@@ -38,7 +40,7 @@ public:
             archivo.close();
         }
     }
-
+	//Busca el id mas alto y devuelve el siguiente para asignar a un nuevo peluquero
     int nuevoId() {
         int maxId = 0;
         for (int i = 0; i < lista.size(); i++) {
@@ -47,7 +49,7 @@ public:
         return maxId + 1;
     }
 
-
+	//Busca coincidencias en nombre y apellido, devuelve un vector con los peluqueros encontrados
     vector<Peluquero> buscarCoincidencias(string textoBuscado) {
         string buscado = aMinusculas(textoBuscado);
         vector<Peluquero> resultado;
@@ -65,7 +67,7 @@ public:
         lista.push_back(p);
         guardarEnArchivo();
     }
-
+	//No elimina, solo marca como inactivo y reescribe el archivo
     bool baja(int id) {
         for (int i = 0; i < lista.size(); i++) {
             if (lista[i].getId() == id && lista[i].getActivo()) {
@@ -89,7 +91,7 @@ public:
         }
         return false;
     }
-
+    //Lista los peluqueros activos
     void listar() {
         bool hayAlguno = false;
         for (int i = 0; i < lista.size(); i++) {
